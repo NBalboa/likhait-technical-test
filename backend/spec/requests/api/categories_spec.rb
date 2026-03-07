@@ -54,6 +54,20 @@ RSpec.describe "Api::Categories", type: :request do
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
+      it "with missing category name" do
+        missing_category_name = {
+          category: {
+            other_field: ""
+          }
+        }
+
+        expect {
+            post '/api/categories', params: missing_category_name, as: :json
+        }.to change(Category, :count).by(0)
+
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
       it "with duplicate category" do
         duplicate_category_params = {
             category: {
