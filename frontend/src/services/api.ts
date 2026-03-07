@@ -109,7 +109,7 @@ export async function updateExpense(
   });
 
   if (!response.ok) {
-    throw new Error(await response.json());
+    throw new Error("Failed to update expense.")
   }
 
   return response.json();
