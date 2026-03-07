@@ -22,4 +22,65 @@ RSpec.describe "Api::Categories", type: :request do
       expect(json.map { |c| c["name"] }).to eq([ "Food", "Supplies", "Transport" ])
     end
   end
+
+  describe "POST /api/categories" do
+    let!(:food) { Category.create!(name: "Food") }
+    it "create new category" do
+      new_category_params = {
+        category: {
+          name: "New"
+        }
+      }
+
+      expect {
+          post '/api/categories', params: new_category_params, as: :json
+      }.to change(Category, :count).by(1)
+
+      expect(response).to have_http_status(:created)
+    end
+
+    context "with invalid parameters" do
+      it "with empty category name" do
+        empty_category_name = {
+          category: {
+            name: ""
+          }
+        }
+
+        expect {
+            post '/api/categories', params: empty_category_name, as: :json
+        }.to change(Category, :count).by(0)
+
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it "with duplicate category" do
+        duplicate_category_params = {
+            category: {
+              name: "Food"
+            }
+        }
+
+        expect {
+            post '/api/categories', params: duplicate_category_params, as: :json
+        }.to change(Category, :count).by(0)
+
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it "with case-insensitive duplicate category" do
+          case_insensitive_duplicate_category_params = {
+            category: {
+              name: "fOOd"
+            }
+          }
+
+        expect {
+          post '/api/categories', params: case_insensitive_duplicate_category_params, as: :json
+        }.to change(Category, :count).by(0)
+
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+  end
 end
