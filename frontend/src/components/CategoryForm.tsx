@@ -39,7 +39,7 @@ export function CategoryForm({
     <TextField
       label='Name'
       type='text'
-      placeholder='Enter Name Category'
+      placeholder='Enter Category Name'
       error={errors.name}
       value={formData.name}
       onChange={(e) => handleChange("name", e.target.value)}
