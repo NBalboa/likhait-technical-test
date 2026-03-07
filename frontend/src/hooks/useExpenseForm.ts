@@ -5,6 +5,7 @@
 import { useState } from "react";
 import { ExpenseFormData } from "../types";
 import { formatDate } from "../utils/expenseUtils";
+import { removeTime } from "../utils/dateUtils";
 
 interface UseExpenseFormProps {
   initialData?: Partial<ExpenseFormData>;
@@ -47,6 +48,13 @@ export function useExpenseForm({ initialData, onSubmit }: UseExpenseFormProps) {
 
     if (!formData.date) {
       newErrors.date = "Date is required";
+    }
+
+    const currentData = removeTime(new Date());
+    const date = removeTime(new Date(formData.date));
+
+    if (date > currentData) {
+      newErrors.date = "Date must not be in the future"
     }
 
     setErrors(newErrors);
