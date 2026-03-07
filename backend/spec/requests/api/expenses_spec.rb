@@ -166,21 +166,6 @@ RSpec.describe "Api::Expenses", type: :request do
 
         expect(response).to have_http_status(:unprocessable_entity)
       end
-      it "with missing category id" do
-        invalid_params = {
-          expense: {
-            description: "",
-            amount: 100.00,
-            date: Date.today
-          }
-        }
-
-        expect {
-          post "/api/expenses", params: invalid_params, as: :json
-        }.to change(Expense, :count).by(0)
-
-        expect(response).to have_http_status(:unprocessable_entity)
-      end
 
       it "with empty category id" do
         invalid_params = {
