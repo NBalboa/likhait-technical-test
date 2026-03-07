@@ -217,7 +217,7 @@ RSpec.describe "Api::Expenses", type: :request do
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
-            it "with empty date" do
+      it "with future date" do
         invalid_params = {
           expense: {
             description: "Description",
