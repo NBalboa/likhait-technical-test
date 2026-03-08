@@ -32,7 +32,7 @@ export function CategoryForm({
       value={formData.name}
       onChange={(e) => handleChange("name", e.target.value)}
       fullWidth
-    // required
+      required
     />
 
     <div style={buttonGroupStyle}>
