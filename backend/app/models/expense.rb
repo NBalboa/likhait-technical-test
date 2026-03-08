@@ -9,8 +9,8 @@ class Expense < ApplicationRecord
 
   private
   def no_future_date
-    if date > Date.today
-      errros.add(:date, "Date must not be in the future")
+    if date && date > Date.today
+      errors.add(:date, "Date must not be in the future")
     end
   end
 end
