@@ -1,5 +1,6 @@
 import { CATEGORY_ERRORS } from "../constants/categoryErrors";
-import { CategoryErrorCode, CategoryFormData } from "../types";
+import { CategoryErrorCode, CategoryFormData } from "../types/categoryTypes";
+
 
 export function extractErrorMessages(errors: CategoryErrorCode[]): Partial<CategoryFormData> {
   return errors.reduce(setErrorMessage, {} as Partial<CategoryFormData>)

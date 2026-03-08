@@ -1,7 +1,7 @@
-import { CategoryFormData } from '../types';
 import { Button, TextField } from '../vibes';
 import { useCategoryForm } from '../hooks/useCategoryForm';
 import { buttonGroupStyle, formStyle } from '../styles/modalFormStyle';
+import { CategoryFormData } from '../types/categoryTypes';
 
 interface CategoryFormProps {
   initialData?: Partial<CategoryFormData>;

@@ -1,5 +1,4 @@
-import { CategoryErrorCode } from "../types";
-
+import { CategoryErrorCode } from "../types/categoryTypes";
 
 export const CATEGORY_ERRORS: Record<CategoryErrorCode, string> = {
   NAME_ALREADY_TAKEN: "Duplicate Category name",

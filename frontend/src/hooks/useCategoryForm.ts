@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { CategoryErrorCode, CategoryFormData } from "../types";
 import { extractErrorMessages } from "../utils/categoryErrorUtils";
+import { CategoryErrorCode, CategoryFormData } from "../types/categoryTypes";
 
 interface UseCategoryFormProps {
   initialData?: Partial<CategoryFormData>;

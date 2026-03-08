@@ -3,7 +3,7 @@
  */
 
 import { API_BASE_URL } from "../constants/baseURL";
-import { Category, CategoryErrorCode, CategoryFormData } from "../types";
+import { Category, CategoryErrorCode, CategoryFormData } from "../types/categoryTypes";
 
 /**
  * Fetch all categories
