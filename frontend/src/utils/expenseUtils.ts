@@ -2,7 +2,9 @@
  * Utility functions for expense calculations and data manipulation
  */
 
-import { Expense } from "../types";
+import { Expense } from "../types/expenseTypes";
+
+
 
 /**
  * Calculate total amount from an array of expenses

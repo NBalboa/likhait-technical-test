@@ -1,5 +1,6 @@
 import React from "react";
 import { COLORS } from "../constants/colors";
+import { headerStyle, logoIconStyle, logoStyle, logoTitleStyle, navStyle, toggleButtonStyle } from "../styles/sidebarStyle";
 
 interface SidebarProps {
   onNavigate?: (page: string) => void;
@@ -14,6 +15,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   isCollapsed = false,
   onToggleCollapse,
 }) => {
+
   const sidebarStyle: React.CSSProperties = {
     width: isCollapsed ? "80px" : "360px",
     height: "100vh",
@@ -25,65 +27,12 @@ const Sidebar: React.FC<SidebarProps> = ({
     left: 0,
     top: 0,
     transition: "width 0.1s ease",
-  };
-
-  const headerStyle: React.CSSProperties = {
-    padding: "24px 16px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    borderBottom: `1px solid ${COLORS.secondary.s04}`,
-  };
-
-  const logoStyle: React.CSSProperties = {
-    display: "flex",
-    alignItems: "center",
-    gap: "16px",
-  };
-
-  const logoIconStyle: React.CSSProperties = {
-    width: "48px",
-    height: "48px",
-    background: COLORS.primary.p07,
-    borderRadius: "12px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontSize: "28px",
-    fontWeight: "bold",
-    color: "white",
+    zIndex: 9999
   };
 
   const logoTextStyle: React.CSSProperties = {
     display: isCollapsed ? "none" : "flex",
     flexDirection: "column",
-  };
-
-  const logoTitleStyle: React.CSSProperties = {
-    fontSize: "24px",
-    fontWeight: 700,
-    color: COLORS.primary.p09,
-    lineHeight: 1.2,
-  };
-
-  const toggleButtonStyle: React.CSSProperties = {
-    width: "40px",
-    height: "40px",
-    background: "transparent",
-    border: "none",
-    borderRadius: "8px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    cursor: "pointer",
-
-    transition: "background 0.2s",
-    marginLeft: "16px",
-  };
-
-  const navStyle: React.CSSProperties = {
-    flex: 1,
-    padding: "16px 0",
   };
 
   const navItemStyle: React.CSSProperties = {
