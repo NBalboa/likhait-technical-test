@@ -2,77 +2,46 @@
  * Calendar expense table component
  */
 
-import { useState } from "react";
 import { formatCurrency, formatDate } from "../utils/expenseUtils";
 import { getCategoryEmoji } from "../constants/categoryEmojis";
 import { COLORS } from "../constants/colors";
 import { Button, Modal, Pagination } from "../vibes";
 import { ExpenseForm } from "./ExpenseForm.tsx";
-import { deleteExpense, updateExpense } from "../services/expenseApi.ts";
-import { Expense, ExpenseFormData } from "../types/expenseTypes.ts";
+import { Expense } from "../types/expenseTypes.ts";
 import { Category } from "../types/categoryTypes.ts";
 import { actionButtonsStyle, emptyStyle, tableStyle, tdStyle, theadStyle, thStyle } from "../styles/calendarExpenseTableStyle.ts";
+import { useCalendarExpenseTable } from "../hooks/useCalendarExpenseTable.ts";
 
 interface CalendarExpenseTableProps {
   expenses: Expense[];
   onExpenseUpdated: () => void;
   categories: Category[]
 }
-const ITEMS_PER_PAGE = 10;
 
 export function CalendarExpenseTable({
   expenses,
   onExpenseUpdated,
   categories
 }: CalendarExpenseTableProps) {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [editingExpense, setEditingExpense] = useState<Expense | null>(null);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [deletingExpense, setDeletingExpense] = useState<Expense | null>(null);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-  const totalPages = Math.ceil(expenses.length / ITEMS_PER_PAGE);
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
-  const currentExpenses = expenses.slice(startIndex, endIndex);
-
-  const handleEdit = (expense: Expense) => {
-    setEditingExpense(expense);
-    setIsEditModalOpen(true);
-  };
-
-  const handleDelete = (expense: Expense) => {
-    setDeletingExpense(expense);
-    setIsDeleteModalOpen(true);
-  };
-
-  const confirmDelete = async () => {
-    if (!deletingExpense) return;
-    try {
-      await deleteExpense(deletingExpense.id);
-      setIsDeleteModalOpen(false);
-      setDeletingExpense(null);
-      onExpenseUpdated();
-    } catch (error) {
-      console.error("Failed to delete expense:", error);
-      alert("Failed to delete expense");
-    }
-  };
-
-  const handleUpdate = async (data: ExpenseFormData) => {
-    if (!editingExpense) return;
-    try {
-      await updateExpense(editingExpense.id, data);
-      setIsEditModalOpen(false);
-      setEditingExpense(null);
-      onExpenseUpdated();
-    } catch (error) {
-      console.error("Failed to update expense:", error);
-      throw error;
-    }
-  };
-
-
+  const {
+    confirmDelete,
+    currentExpenses,
+    currentPage,
+    deletingExpense,
+    editingExpense,
+    handleDelete,
+    handleEdit,
+    handleUpdate,
+    isDeleteModalOpen,
+    isEditModalOpen,
+    setCurrentPage,
+    setDeletingExpense,
+    setEditingExpense,
+    setIsDeleteModalOpen,
+    setIsEditModalOpen,
+    totalPages
+  } = useCalendarExpenseTable({ expenses, onExpenseUpdated })
 
   if (expenses.length === 0) {
     return (
