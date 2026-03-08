@@ -2,7 +2,7 @@
  * API service for communicating with the backend
  */
 
-import { CategoryFormData, Expense, ExpenseFormData } from "../types";
+import { CategoryFormData, Expense, ExpenseErrorCode, ExpenseFormData } from "../types";
 
 const API_BASE_URL = "http://localhost:3000/api";
 
@@ -67,7 +67,9 @@ export async function createExpense(data: ExpenseFormData): Promise<Expense> {
   });
 
   if (!response.ok) {
-    throw new Error("Failed to create expense");
+    const error: { errors: ExpenseErrorCode[] } = await response.json();
+
+    throw error.errors;
   }
 
   return response.json();

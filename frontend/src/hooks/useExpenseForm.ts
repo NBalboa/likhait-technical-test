@@ -3,9 +3,10 @@
  */
 
 import { useState } from "react";
-import { ExpenseFormData } from "../types";
+import { ExpenseErrorCode, ExpenseFormData } from "../types";
 import { formatDate } from "../utils/expenseUtils";
 import { removeTime } from "../utils/dateUtils";
+import { extractErrorMessages } from "../utils/expenseErrorUtils";
 
 interface UseExpenseFormProps {
   initialData?: Partial<ExpenseFormData>;
@@ -32,30 +33,28 @@ export function useExpenseForm({ initialData, onSubmit }: UseExpenseFormProps) {
   };
 
   const validateForm = (): boolean => {
-    const newErrors: Partial<ExpenseFormData> = {};
+    const errorsCodes: ExpenseErrorCode[] = [];
 
     if (!formData.amount || Number(formData.amount) <= 0) {
-      newErrors.amount = "Amount must be greater than 0";
+      errorsCodes.push("AMOUNT_NON_POSITIVE");
     }
 
     if (!formData.description.trim()) {
-      newErrors.description = "Description is required";
+      errorsCodes.push("DESCRIPTION_MISSING")
     }
 
     if (!formData.category) {
-      newErrors.category = "Category is required";
-    }
-
-    if (!formData.date) {
-      newErrors.date = "Date is required";
+      errorsCodes.push("CATEGORY_ID_MISSING");
     }
 
     const currentData = removeTime(new Date());
     const date = removeTime(new Date(formData.date));
 
     if (date > currentData) {
-      newErrors.date = "Date must not be in the future"
+      errorsCodes.push("DATE_FUTURE");
     }
+
+    const newErrors = extractErrorMessages(errorsCodes);
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -72,14 +71,10 @@ export function useExpenseForm({ initialData, onSubmit }: UseExpenseFormProps) {
     try {
       await onSubmit(formData);
       // Reset form on success
-      setFormData({
-        amount: "",
-        description: "",
-        category: "",
-        date: formatDate(new Date()),
-      });
-      setErrors({});
+      resetForm();
     } catch (error) {
+      const newErrors = extractErrorMessages(error as ExpenseErrorCode[]);
+      setErrors(newErrors);
       console.error("Form submission error:", error);
     } finally {
       setIsSubmitting(false);

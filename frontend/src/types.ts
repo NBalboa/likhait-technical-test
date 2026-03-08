@@ -52,3 +52,13 @@ export interface Category {
   id: number,
   name: string,
 }
+
+export type ExpenseErrorCode =
+  "AMOUNT_MISSING" |
+  "AMOUNT_NON_POSITIVE" |
+  "DESCRIPTION_MISSING" |
+  "CATEGORY_ID_MUST_EXIST" |
+  "CATEGORY_ID_MISSING" |
+  "DATE_MISSING" |
+  "DATE_FUTURE";
+

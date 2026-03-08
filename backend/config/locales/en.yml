@@ -28,4 +28,23 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+    hello: "Hello world"
+    errors:
+        format: "%{message}"
+    activerecord:
+        errors:
+            models:
+                expense:
+                    attributes:
+                        amount:
+                            blank: "AMOUNT_MISSING"
+                            greater_than: "AMOUNT_NON_POSITIVE"
+                        description:
+                            blank: "DESCRIPTION_MISSING"
+                        category:
+                            required: "CATEGORY_ID_MUST_EXIST"
+                        category_id:
+                            blank: "CATEGORY_ID_MISSING"
+                        date:
+                            blank: "DATE_MISSING"
+                            future: "DATE_FUTURE"
