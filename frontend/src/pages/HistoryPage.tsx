@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getExpenses, createExpense, fetchCategories, createCategory } from "../services/api";
+import { fetchCategories, createCategory } from "../services/api";
 import { Category, CategoryFormData, Expense, ExpenseFormData } from "../types";
 import YearNavigation from "../components/YearNavigation";
 import { MonthNavigation } from "../components/MonthNavigation";
@@ -9,6 +9,7 @@ import { ExpenseForm } from "../components/ExpenseForm";
 import { Modal, Button } from "../vibes";
 import { COLORS } from "../constants/colors";
 import { CategoryForm } from "../components/CategoryForm";
+import { createExpense, getExpenses } from "../services/expenseApi";
 
 const HistoryPage: React.FC = () => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
