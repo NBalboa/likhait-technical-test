@@ -2,9 +2,10 @@
  * API service for communicating with the backend
  */
 
+import { API_BASE_URL } from "../constants/baseURL";
 import { Category, CategoryFormData, Expense, ExpenseErrorCode, ExpenseFormData } from "../types";
 
-const API_BASE_URL = "http://localhost:3000/api";
+
 
 /**
  * Fetch all expenses
