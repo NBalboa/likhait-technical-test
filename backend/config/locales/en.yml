@@ -48,3 +48,8 @@ en:
                         date:
                             blank: "DATE_MISSING"
                             future: "DATE_FUTURE"
+                category:
+                    attributes:
+                        name:
+                            blank: "NAME_MISSING"
+                            taken: "NAME_ALREADY_TAKEN"
