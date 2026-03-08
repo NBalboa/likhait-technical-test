@@ -51,6 +51,8 @@ RSpec.describe "Api::Expenses", type: :request do
     end
 
     context "with invalid parameters" do
+      ERROR_CODE_PATH = "activerecord.errors.models.expense.attributes"
+
       it "with missing amount" do
         invalid_params = {
           expense: {
@@ -63,6 +65,10 @@ RSpec.describe "Api::Expenses", type: :request do
         expect {
           post "/api/expenses", params: invalid_params, as: :json
         }.to change(Expense, :count).by(0)
+
+        json = JSON.parse(response.body)
+
+        expect(json["errors"]).to include(I18n.t(ERROR_CODE_PATH + '.amount.blank'))
 
         expect(response).to have_http_status(:unprocessable_entity)
       end
@@ -81,6 +87,10 @@ RSpec.describe "Api::Expenses", type: :request do
           post "/api/expenses", params: invalid_params, as: :json
         }.to change(Expense, :count).by(0)
 
+        json = JSON.parse(response.body)
+
+        expect(json["errors"]).to include(I18n.t(ERROR_CODE_PATH + '.amount.greater_than'))
+
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
@@ -97,6 +107,10 @@ RSpec.describe "Api::Expenses", type: :request do
         expect {
           post "/api/expenses", params: invalid_params, as: :json
         }.to change(Expense, :count).by(0)
+
+        json = JSON.parse(response.body)
+
+        expect(json["errors"]).to include(I18n.t(ERROR_CODE_PATH + '.amount.blank'))
 
         expect(response).to have_http_status(:unprocessable_entity)
       end
@@ -115,6 +129,10 @@ RSpec.describe "Api::Expenses", type: :request do
           post "/api/expenses", params: invalid_params, as: :json
         }.to change(Expense, :count).by(0)
 
+        json = JSON.parse(response.body)
+
+        expect(json["errors"]).to include(I18n.t(ERROR_CODE_PATH + '.amount.greater_than'))
+
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
@@ -130,6 +148,10 @@ RSpec.describe "Api::Expenses", type: :request do
         expect {
           post "/api/expenses", params: invalid_params, as: :json
         }.to change(Expense, :count).by(0)
+
+        json = JSON.parse(response.body)
+
+        expect(json["errors"]).to include(I18n.t(ERROR_CODE_PATH + '.description.blank'))
 
         expect(response).to have_http_status(:unprocessable_entity)
       end
@@ -148,6 +170,10 @@ RSpec.describe "Api::Expenses", type: :request do
           post "/api/expenses", params: invalid_params, as: :json
         }.to change(Expense, :count).by(0)
 
+        json = JSON.parse(response.body)
+
+        expect(json["errors"]).to include(I18n.t(ERROR_CODE_PATH + '.description.blank'))
+
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
@@ -163,6 +189,10 @@ RSpec.describe "Api::Expenses", type: :request do
         expect {
           post "/api/expenses", params: invalid_params, as: :json
         }.to change(Expense, :count).by(0)
+
+        json = JSON.parse(response.body)
+
+        expect(json["errors"]).to include(I18n.t(ERROR_CODE_PATH + '.category_id.blank'))
 
         expect(response).to have_http_status(:unprocessable_entity)
       end
@@ -181,6 +211,10 @@ RSpec.describe "Api::Expenses", type: :request do
           post "/api/expenses", params: invalid_params, as: :json
         }.to change(Expense, :count).by(0)
 
+        json = JSON.parse(response.body)
+
+        expect(json["errors"]).to include(I18n.t(ERROR_CODE_PATH + '.category_id.blank'))
+
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
@@ -196,6 +230,10 @@ RSpec.describe "Api::Expenses", type: :request do
         expect {
           post "/api/expenses", params: invalid_params, as: :json
         }.to change(Expense, :count).by(0)
+
+        json = JSON.parse(response.body)
+
+        expect(json["errors"]).to include(I18n.t(ERROR_CODE_PATH + '.date.blank'))
 
         expect(response).to have_http_status(:unprocessable_entity)
       end
@@ -214,6 +252,10 @@ RSpec.describe "Api::Expenses", type: :request do
           post "/api/expenses", params: invalid_params, as: :json
         }.to change(Expense, :count).by(0)
 
+        json = JSON.parse(response.body)
+
+        expect(json["errors"]).to include(I18n.t(ERROR_CODE_PATH + '.date.blank'))
+
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
@@ -230,6 +272,10 @@ RSpec.describe "Api::Expenses", type: :request do
         expect {
           post "/api/expenses", params: invalid_params, as: :json
         }.to change(Expense, :count).by(0)
+
+        json = JSON.parse(response.body)
+
+        expect(json["errors"]).to include(I18n.t(ERROR_CODE_PATH + '.date.future'))
 
         expect(response).to have_http_status(:unprocessable_entity)
       end
