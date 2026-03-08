@@ -100,12 +100,20 @@ export async function updateExpense(
   id: number,
   data: Partial<ExpenseFormData>,
 ): Promise<Expense> {
+
+  const expenseData = {
+    description: data.description,
+    amount: data.amount,
+    category_id: data.category,
+    date: data.date,
+  };
+
   const response = await fetch(`${API_BASE_URL}/expenses/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ expense: data }),
+    body: JSON.stringify({ expense: expenseData }),
   });
 
   if (!response.ok) {
