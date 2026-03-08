@@ -23,8 +23,6 @@ export function CategoryForm({
     onSubmit
   })
 
-
-
   return <form style={formStyle} onSubmit={handleSubmit}>
     <TextField
       label='Name'
