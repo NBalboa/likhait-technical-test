@@ -1,10 +1,11 @@
 /**
  * Form component for adding/editing expenses
  */
-import { Category, ExpenseFormData } from "../types";
+import { Category } from "../types";
 import { TextField, SelectBox, Button } from "../vibes";
 import { useExpenseForm } from "../hooks/useExpenseForm";
 import { buttonGroupStyle, formStyle } from "../styles/modalFormStyle";
+import { ExpenseFormData } from "../types/expenseTypes";
 
 interface ExpenseFormProps {
   initialData?: Partial<ExpenseFormData>;

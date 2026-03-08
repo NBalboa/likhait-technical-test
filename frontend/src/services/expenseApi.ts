@@ -1,5 +1,5 @@
 import { API_BASE_URL } from "../constants/baseURL";
-import { Expense, ExpenseErrorCode, ExpenseFormData } from "../types";
+import { Expense, ExpenseErrorCode, ExpenseFormData } from "../types/expenseTypes";
 
 /**
  * Fetch all expenses

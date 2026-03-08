@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { Category, CategoryFormData, Expense, ExpenseFormData } from "../types";
+import { Category, CategoryFormData } from "../types";
 import { createExpense, getExpenses } from "../services/expenseApi";
 import { createCategory, fetchCategories } from "../services/categoryApi";
+import { Expense, ExpenseFormData } from "../types/expenseTypes";
 
 export function useHistoryPage() {
   const [expenses, setExpenses] = useState<Expense[]>([]);

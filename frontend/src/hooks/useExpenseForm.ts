@@ -3,10 +3,10 @@
  */
 
 import { useState } from "react";
-import { ExpenseErrorCode, ExpenseFormData } from "../types";
 import { formatDate } from "../utils/expenseUtils";
 import { removeTime } from "../utils/dateUtils";
 import { extractErrorMessages } from "../utils/expenseErrorUtils";
+import { ExpenseErrorCode, ExpenseFormData } from "../types/expenseTypes";
 
 interface UseExpenseFormProps {
   initialData?: Partial<ExpenseFormData>;

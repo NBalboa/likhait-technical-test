@@ -3,7 +3,7 @@
  */
 
 import { API_BASE_URL } from "../constants/baseURL";
-import { Category, CategoryFormData, ExpenseErrorCode } from "../types";
+import { Category, CategoryErrorCode, CategoryFormData } from "../types";
 
 /**
  * Fetch all categories
@@ -32,7 +32,7 @@ export async function createCategory(data: CategoryFormData): Promise<Category> 
   });
 
   if (!response.ok) {
-    const error: { errors: ExpenseErrorCode[] } = await response.json();
+    const error: { errors: CategoryErrorCode[] } = await response.json();
 
     throw error.errors;
   }

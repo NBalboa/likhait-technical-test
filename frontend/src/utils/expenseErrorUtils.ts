@@ -1,5 +1,6 @@
-import { ExpenseErrorCode, ExpenseFormData } from "../types";
+
 import { EXPENSE_ERRORS } from "../constants/expenseErrors";
+import { ExpenseErrorCode, ExpenseFormData } from "../types/expenseTypes";
 
 export function extractErrorMessages(errors: ExpenseErrorCode[]): Partial<ExpenseFormData> {
   return errors.reduce(setErrorMessage, {} as Partial<ExpenseFormData>)

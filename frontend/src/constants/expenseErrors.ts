@@ -1,4 +1,5 @@
-import { ExpenseErrorCode } from "../types";
+import { ExpenseErrorCode } from "../types/expenseTypes";
+
 
 export const EXPENSE_ERRORS: Record<ExpenseErrorCode, string> = {
   AMOUNT_MISSING: "Amount is required",
