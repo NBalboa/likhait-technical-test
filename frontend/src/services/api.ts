@@ -5,8 +5,6 @@
 import { API_BASE_URL } from "../constants/baseURL";
 import { Category, CategoryFormData, Expense, ExpenseErrorCode, ExpenseFormData } from "../types";
 
-
-
 /**
  * Fetch all expenses
  */
