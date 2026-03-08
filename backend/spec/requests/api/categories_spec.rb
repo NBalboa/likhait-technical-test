@@ -40,6 +40,8 @@ RSpec.describe "Api::Categories", type: :request do
     end
 
     context "with invalid parameters" do
+      CATEGORY_ERROR_CODE_PATH = "activerecord.errors.models.category.attributes"
+
       it "with empty category name" do
         empty_category_name = {
           category: {
@@ -50,6 +52,10 @@ RSpec.describe "Api::Categories", type: :request do
         expect {
             post '/api/categories', params: empty_category_name, as: :json
         }.to change(Category, :count).by(0)
+
+        json = JSON.parse(response.body)
+
+        expect(json["errors"]).to include(I18n.t(CATEGORY_ERROR_CODE_PATH + '.name.blank'))
 
         expect(response).to have_http_status(:unprocessable_entity)
       end
@@ -64,6 +70,10 @@ RSpec.describe "Api::Categories", type: :request do
         expect {
             post '/api/categories', params: missing_category_name, as: :json
         }.to change(Category, :count).by(0)
+
+        json = JSON.parse(response.body)
+
+        expect(json["errors"]).to include(I18n.t(CATEGORY_ERROR_CODE_PATH + '.name.blank'))
 
         expect(response).to have_http_status(:unprocessable_entity)
       end
@@ -92,6 +102,10 @@ RSpec.describe "Api::Categories", type: :request do
         expect {
           post '/api/categories', params: case_insensitive_duplicate_category_params, as: :json
         }.to change(Category, :count).by(0)
+
+        json = JSON.parse(response.body)
+
+        expect(json["errors"]).to include(I18n.t(CATEGORY_ERROR_CODE_PATH + '.name.taken'))
 
         expect(response).to have_http_status(:unprocessable_entity)
       end
