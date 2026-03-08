@@ -5,8 +5,8 @@ RSpec.describe "Api::Expenses", type: :request do
   let!(:transport_category) { Category.create!(name: "Transport") }
 
   describe "GET /api/expenses" do
-  let!(:expense1) { Expense.create!(description: "Lunch", amount: 100.00, category: food_category, date: Date.today) }
-  let!(:expense2) { Expense.create!(description: "Taxi", amount: 50.00, category: transport_category, date: Date.today) }
+  let!(:expense1) { Expense.create!(description: "Lunch", amount: 100.00, category: food_category, date: "2026-03-01") }
+  let!(:expense2) { Expense.create!(description: "Taxi", amount: 50.00, category: transport_category, date: "2026-03-02") }
 
     it "returns all expenses with category information" do
       get "/api/expenses"
@@ -16,7 +16,7 @@ RSpec.describe "Api::Expenses", type: :request do
       expect(json.length).to eq(2)
     end
 
-    it "returns expenses in descending order by created_at" do
+    it "returns expenses in descending order by date" do
       get "/api/expenses"
 
       json = JSON.parse(response.body)
@@ -46,11 +46,61 @@ RSpec.describe "Api::Expenses", type: :request do
         expect(response).to have_http_status(:created)
         json = JSON.parse(response.body)
         expect(json["description"]).to eq("Team Lunch")
-        expect(json["amount"]).to eq("150.5")
+        expect(json["amount"]).to eq(150.5)
       end
     end
 
     context "with invalid parameters" do
+      it "with missing amount" do
+        invalid_params = {
+          expense: {
+            description: "Invalid expense",
+            category_id: food_category.id,
+            date: Date.today
+          }
+        }
+
+        expect {
+          post "/api/expenses", params: invalid_params, as: :json
+        }.to change(Expense, :count).by(0)
+
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it "with zero amount" do
+        invalid_params = {
+          expense: {
+            description: "Invalid expense",
+            amount: 0.00,
+            category_id: food_category.id,
+            date: Date.today
+          }
+        }
+
+        expect {
+          post "/api/expenses", params: invalid_params, as: :json
+        }.to change(Expense, :count).by(0)
+
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it "with empty amount" do
+        invalid_params = {
+          expense: {
+            description: "Invalid expense",
+            amount: "",
+            category_id: food_category.id,
+            date: Date.today
+          }
+        }
+
+        expect {
+          post "/api/expenses", params: invalid_params, as: :json
+        }.to change(Expense, :count).by(0)
+
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
       it "with negative amounts" do
         invalid_params = {
           expense: {
@@ -63,9 +113,25 @@ RSpec.describe "Api::Expenses", type: :request do
 
         expect {
           post "/api/expenses", params: invalid_params, as: :json
-        }.to change(Expense, :count).by(1)
+        }.to change(Expense, :count).by(0)
 
-        expect(response).to have_http_status(:created)
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it "with missing descriptions" do
+        invalid_params = {
+          expense: {
+            amount: 100.00,
+            category_id: food_category.id,
+            date: Date.today
+          }
+        }
+
+        expect {
+          post "/api/expenses", params: invalid_params, as: :json
+        }.to change(Expense, :count).by(0)
+
+        expect(response).to have_http_status(:unprocessable_entity)
       end
 
       it "with empty descriptions" do
@@ -80,9 +146,75 @@ RSpec.describe "Api::Expenses", type: :request do
 
         expect {
           post "/api/expenses", params: invalid_params, as: :json
-        }.to change(Expense, :count).by(1)
+        }.to change(Expense, :count).by(0)
 
-        expect(response).to have_http_status(:created)
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it "with missing category id" do
+        invalid_params = {
+          expense: {
+            description: "Description",
+            amount: 100.00,
+            date: Date.today
+          }
+        }
+
+        expect {
+          post "/api/expenses", params: invalid_params, as: :json
+        }.to change(Expense, :count).by(0)
+
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it "with empty category id" do
+        invalid_params = {
+          expense: {
+            description: "Description",
+            category_id: "",
+            amount: 100.00,
+            date: Date.today
+          }
+        }
+
+        expect {
+          post "/api/expenses", params: invalid_params, as: :json
+        }.to change(Expense, :count).by(0)
+
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it "with missing date" do
+        invalid_params = {
+          expense: {
+            description: "Description",
+            category_id: 1,
+            amount: 100.00
+          }
+        }
+
+        expect {
+          post "/api/expenses", params: invalid_params, as: :json
+        }.to change(Expense, :count).by(0)
+
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it "with empty date" do
+        invalid_params = {
+          expense: {
+            description: "Description",
+            category_id: 1,
+            amount: 100.00,
+            date: ""
+          }
+        }
+
+        expect {
+          post "/api/expenses", params: invalid_params, as: :json
+        }.to change(Expense, :count).by(0)
+
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
