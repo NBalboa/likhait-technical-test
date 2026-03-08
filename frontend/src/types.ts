@@ -62,3 +62,5 @@ export type ExpenseErrorCode =
   "DATE_MISSING" |
   "DATE_FUTURE";
 
+export type CategoryErrorCode = "NAME_MISSING" | "NAME_ALREADY_TAKEN"
+

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { CategoryFormData } from "../types";
+import { CategoryErrorCode, CategoryFormData } from "../types";
+import { extractErrorMessages } from "../utils/categoryErrorUtils";
 
 interface UseCategoryFormProps {
   initialData?: Partial<CategoryFormData>;
@@ -24,11 +25,13 @@ export function useCategoryForm({ initialData, onSubmit }: UseCategoryFormProps)
   }
 
   const validateForm = (): boolean => {
-    const newErrors: Partial<CategoryFormData> = {};
+    const errorCodes: CategoryErrorCode[] = [];
 
     if (!formData.name.trim()) {
-      newErrors.name = "Name is required."
+      errorCodes.push("NAME_MISSING");
     }
+
+    const newErrors = extractErrorMessages(errorCodes);
 
     setErrors(newErrors);
 
@@ -49,15 +52,13 @@ export function useCategoryForm({ initialData, onSubmit }: UseCategoryFormProps)
       resetForm()
       resetError()
     } catch (error) {
-      const newErrors: Partial<CategoryFormData> = {};
-      newErrors.name = "Duplicate Category name";
+      const newErrors = extractErrorMessages(error as CategoryErrorCode[]);
       setErrors(newErrors);
       console.error("Form Submission Error: ", error);
     }
     finally {
       setIsSubmitting(false);
     }
-
   }
 
   const resetForm = () => {
