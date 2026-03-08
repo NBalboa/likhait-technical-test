@@ -4,8 +4,7 @@
 
 import React from "react";
 import { COLORS } from "../constants/colors";
-import { navigationButtonStyle, wrapperStyle } from "../styles/monthNavigationStyle";
-import { containerStyle } from "../styles/categoryBreakdownStyle";
+import { navigationButtonStyle, wrapperStyle, containerStyle } from "../styles/monthNavigationStyle";
 import { MONTHS } from "../constants/months";
 
 interface MonthNavigationProps {
