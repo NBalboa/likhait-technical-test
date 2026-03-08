@@ -10,7 +10,7 @@ class Api::CategoriesController < ApplicationController
     if category.save
       render json: category, status: :created
     else
-      render json: { errros: category.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: category.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
