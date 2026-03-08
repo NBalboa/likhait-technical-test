@@ -27,6 +27,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     left: 0,
     top: 0,
     transition: "width 0.1s ease",
+    zIndex: 9999
   };
 
   const logoTextStyle: React.CSSProperties = {
@@ -54,7 +55,6 @@ const Sidebar: React.FC<SidebarProps> = ({
   const navTextStyle: React.CSSProperties = {
     display: isCollapsed ? "none" : "inline",
   };
-
 
   return (
     <aside style={sidebarStyle}>
