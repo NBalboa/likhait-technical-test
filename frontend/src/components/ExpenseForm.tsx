@@ -44,7 +44,7 @@ export function ExpenseForm({
         onChange={(e) => handleChange("amount", e.target.value)}
         error={errors.amount}
         fullWidth
-
+        required
       />
 
       <TextField
@@ -55,7 +55,7 @@ export function ExpenseForm({
         onChange={(e) => handleChange("description", e.target.value)}
         error={errors.description}
         fullWidth
-
+        required
       />
 
       <SelectBox
@@ -65,7 +65,7 @@ export function ExpenseForm({
         onChange={(e) => handleChange("category", e.target.value)}
         error={errors.category}
         fullWidth
-
+        required
       />
 
       <TextField
@@ -75,7 +75,7 @@ export function ExpenseForm({
         onChange={(e) => handleChange("date", e.target.value)}
         error={errors.date}
         fullWidth
-
+        required
       />
 
       <div style={buttonGroupStyle}>
